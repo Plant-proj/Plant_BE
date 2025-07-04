@@ -10,11 +10,11 @@
 | IDE             | IntelliJ IDEA    |
 |-----------------|------------------|
 | **Language**    | Java 17          |
-| **Framework**   | SpringBoot |
-| **Build Tools** | Gradle|
+| **Framework**   | Spring Boot 3.5.3 |
+| **Build Tools** | Gradle 8.14|
 | **DataBase**    | MySQL   |
 
-### ⚒️ Project Tech Stack
+### Project Tech Stack
 | **Category** | **Technologies**                                                                                                                                                                                                                                                                                                                                       |
 |--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Backend**  | ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white) ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=white) |
