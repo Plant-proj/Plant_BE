@@ -1,13 +1,20 @@
 package dev.plant.backend.domain.oauth.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.plant.backend.domain.oauth.dto.KakaoTokenResponseDto;
 import dev.plant.backend.domain.oauth.dto.KakaoUserInfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Objects;
@@ -60,6 +67,35 @@ public class KakaoService {
         log.info("[KakaoService] ProfileImageUrl = {}", userInfo.getKakaoAccount().getProfile().getProfileImageUrl());
 
         return userInfo;
+    }
+
+    //로그아웃
+    public void kakaoDisconnect(String accessToken) throws JsonProcessingException {
+        String response = WebClient.create("https://kapi.kakao.com")
+                .post()
+                .uri("/v1/user/logout")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        log.info("[KakaoService] logout response = {}", response);
+    }
+
+    //회원 탈퇴
+    public void unlinkKakaoAccount(String accessToken) {
+        WebClient.create("https://kapi.kakao.com")
+                .post()
+                .uri("/v1/user/unlink")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .retrieve()
+                .bodyToMono(String.class)
+                .doOnSuccess(response -> log.info("[KakaoService] unlink response = {}", response))
+                .doOnError(e -> {
+                    throw new RuntimeException("카카오 계정 연결 실패", e); //카카오 계정 연결 실패시 에러
+                })
+                .block();
     }
 
 }
