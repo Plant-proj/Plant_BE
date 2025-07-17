@@ -20,7 +20,7 @@
 | **Backend**  | ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white) ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=white) |
 
 ### ERD
-<img src="https://github.com/user-attachments/assets/eb668c0a-190e-4151-ba9e-7b00dc31c2f9" alt="plant_ERD" width="600"/>
+<img src="https://github.com/user-attachments/assets/c96accd6-2660-4a1f-9221-3235ce9a7224" alt="plant_ERD" width="600"/>
 
 
 
