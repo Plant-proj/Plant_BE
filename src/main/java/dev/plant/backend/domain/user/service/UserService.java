@@ -1,11 +1,14 @@
 package dev.plant.backend.domain.user.service;
 
+import dev.plant.backend.domain.oauth.service.KakaoService;
 import dev.plant.backend.domain.user.domain.User;
 import dev.plant.backend.domain.oauth.dto.KakaoUserInfoResponseDto;
 import dev.plant.backend.domain.user.dto.LoginResponseDto;
 import dev.plant.backend.domain.user.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,6 +17,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final KakaoService kakaoService;
 
     public LoginResponseDto loginWithKakao(KakaoUserInfoResponseDto kakaoUser) {
         Long kakaoId = kakaoUser.getId();
@@ -39,5 +43,19 @@ public class UserService {
         }
 
         return new LoginResponseDto(isNewUser, nickname, profileImageUrl, accountBalance);
+    }
+    @Transactional
+    //회원 탈퇴
+    public void withdraw(HttpSession session){
+        String accessToken = (String) session.getAttribute("accessToken");
+        Long kakaoId = (Long) session.getAttribute("kakaoId");
+        if (accessToken != null){
+            kakaoService.unlinkKakaoAccount(accessToken);
+        }
+        //DB에서 회원 삭제
+        userRepository.deleteByKakaoId(kakaoId);
+
+        session.invalidate();
+
     }
 }
