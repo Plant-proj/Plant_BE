@@ -19,8 +19,8 @@ public class ApiResponse<T> {
         return new ApiResponse<>(status, message, data);
     }
 
-    public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(200, "요청이 성공적으로 처리되었습니다.", data);
+    public static <T> ApiResponse<T> ok(String message, T data) {
+        return new ApiResponse<>(200,message , data);
     }
 
 }

@@ -1,5 +1,6 @@
 package dev.plant.backend.global;
 
+import dev.plant.backend.domain.user.exception.NotFoundUserException;
 import dev.plant.backend.global.exception.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -22,6 +23,12 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.of(exception.getErrorCode());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
+    //Not Found
+    @ExceptionHandler(NotFoundUserException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundUser(NotFoundUserException exception) {
+        log.error("handleNotFound", exception);
+        ErrorResponse errorResponse = ErrorResponse.of(exception.getErrorCode());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 
 }
