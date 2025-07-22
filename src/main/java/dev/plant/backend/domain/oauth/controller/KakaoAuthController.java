@@ -84,7 +84,7 @@ public class KakaoAuthController {
         deleteAccessCookie(response, "accessToken");
         deleteJsessionCookie(response, "JSESSIONID");
 
-        return ResponseEntity.ok(ApiResponse.of(200, "로그아웃이 완료되었습니다.", null));
+        return ResponseEntity.ok(ApiResponse.ok( "로그아웃이 완료되었습니다.", null));
     }
 
 
@@ -100,7 +100,7 @@ public class KakaoAuthController {
 
             deleteJsessionCookie(response, "JSESSIONID");
 
-            return ResponseEntity.ok(ApiResponse.of(200, "회원 탈퇴가 완료되었습니다", null));
+            return ResponseEntity.ok(ApiResponse.ok("회원 탈퇴가 완료되었습니다", null));
 
         } catch (Exception e) {
             throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
