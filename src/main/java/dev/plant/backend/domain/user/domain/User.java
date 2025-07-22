@@ -28,7 +28,7 @@ public class User {
     @Column(nullable = false)
     private String profileImage;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Integer accountBalance = 0;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -60,6 +60,11 @@ public class User {
         if (monthlyReport.getUser() != this) {
             monthlyReport.setUser(this);
         }
+    }
+
+    //잔액 입력
+    public void updateAccountBalance(Integer newAccountBalance) {
+        this.accountBalance = newAccountBalance != null ? newAccountBalance : 0; //사용자가 Null로 보내면 0으로 처리
     }
 
 
