@@ -21,6 +21,6 @@ public class UserController {
     @PatchMapping("/balance")
     public ResponseEntity<ApiResponse<UserBalanceResponse>> updateBalance(HttpSession session, @Valid @RequestBody UserBalanceRequest userBalanceRequest) {
         UserBalanceResponse userBalanceResponse = userService.changeAccountBalance(session, userBalanceRequest);
-        return ResponseEntity.ok(ApiResponse.ok("총 잔액이 성공적으로 설정되었습니다",userBalanceResponse));
+        return ResponseEntity.ok(ApiResponse.ok("총 잔액이 성공적으로 설정되었습니다", userBalanceResponse));
     }
 }
