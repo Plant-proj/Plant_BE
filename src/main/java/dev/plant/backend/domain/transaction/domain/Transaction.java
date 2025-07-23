@@ -1,8 +1,9 @@
 package dev.plant.backend.domain.transaction.domain;
-
+import dev.plant.backend.domain.transaction.dto.UpdateRecordRequest;
 import dev.plant.backend.domain.transaction.model.Category;
 import dev.plant.backend.domain.transaction.model.Type;
 import dev.plant.backend.domain.user.domain.User;
+import dev.plant.backend.global.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Transaction {
+public class Transaction extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +48,7 @@ public class Transaction {
         this.category = category;
         this.title = title;
         this.amount = amount;
-        this.memo = memo;
+        this.memo = memo != null ? memo : "";
         this.date = date;
     }
 
@@ -57,6 +58,13 @@ public class Transaction {
             user.getTransactions().add(this);
         }
     }
-
+    public void updateTransaction(UpdateRecordRequest updateRecordRequest) {
+            this.type = Type.valueOf(updateRecordRequest.getType().toUpperCase());
+            this.category = Category.valueOf(updateRecordRequest.getCategory().toUpperCase());
+            this.title = updateRecordRequest.getTitle();
+            this.amount = updateRecordRequest.getAmount();
+            this.memo = updateRecordRequest.getMemo();
+            this.date = updateRecordRequest.getDate();
+    }
 
 }

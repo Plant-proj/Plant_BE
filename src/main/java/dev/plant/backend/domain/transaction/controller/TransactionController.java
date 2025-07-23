@@ -1,11 +1,11 @@
 package dev.plant.backend.domain.transaction.controller;
 
-import dev.plant.backend.domain.transaction.dto.DailyRecordResponse;
-import dev.plant.backend.domain.transaction.dto.MonthlyRecordResponse;
+import dev.plant.backend.domain.transaction.dto.*;
 import dev.plant.backend.domain.transaction.service.TransactionService;
 import dev.plant.backend.domain.user.domain.User;
 import dev.plant.backend.domain.user.repository.UserRepository;
 import dev.plant.backend.global.response.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -87,6 +87,33 @@ public class TransactionController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(ApiResponse.of(500, "서버 에러가 발생했습니다", null));
         }
+    }
+
+    @Operation(summary="거래 내역 입력",description = "사용자로부터 수입/지출 내역을 입력받을 수 있음")
+    @PostMapping
+    public ResponseEntity<ApiResponse<Long>> addRecord(HttpSession session, @RequestBody AddRecordRequest addRecordRequest) {
+        transactionService.addRecord(session, addRecordRequest);
+        return ResponseEntity.ok(ApiResponse.ok("수입/지출 등록이 완료되었습니다",null));
+    }
+
+    @Operation(summary="거래 내역 수정",description = "사용자가 수입/지출 내역을 수정할 수 있습니다")
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<UpdateRecordResponse>> updateRecord(
+            @PathVariable("id") Long updateRecordId,
+            @RequestBody UpdateRecordRequest updateRecordRequest,
+            HttpSession session)
+    {
+        UpdateRecordResponse updateRecordResponse = transactionService.updateRecord(updateRecordId, session, updateRecordRequest);
+        return ResponseEntity.ok(ApiResponse.ok("수입/지출 수정이 완료되었습니다",updateRecordResponse));
+    }
+
+    @Operation(summary = "거래 내역 삭제",description = "사용자가 수입/지출 내역을 삭제할 수 있습니다")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Long>> deleteRecord(
+            @PathVariable("id") Long deleteRecordId,
+            HttpSession session) {
+        transactionService.deleteRecord(deleteRecordId, session);
+        return ResponseEntity.ok(ApiResponse.ok("수입/지출 기록이 삭제되었습니다",null));
     }
 
 }

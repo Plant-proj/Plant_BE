@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -43,4 +44,17 @@ public class TransactionRepository {
                 .setParameter("end", endOfDay)
                 .getResultList();
     }
+
+    public void save(Transaction transaction) {
+        em.persist(transaction);
+    }
+    public void delete(Transaction transaction) {
+        em.remove(transaction);
+    }
+    public Optional<Transaction> findById(Long id) {
+        Transaction transaction = em.find(Transaction.class, id);
+        return Optional.ofNullable(transaction);
+    }
+
+
 }
