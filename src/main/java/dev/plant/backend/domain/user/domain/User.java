@@ -42,7 +42,7 @@ public class User {
         this.kakaoId = kakaoId;
         this.nickname = nickname;
         this.profileImage = profileImage;
-        this.accountBalance = accountBalance;
+        this.accountBalance = accountBalance != null ? accountBalance : 0;
     }
 
 
