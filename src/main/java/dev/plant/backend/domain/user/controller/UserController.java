@@ -3,6 +3,7 @@ package dev.plant.backend.domain.user.controller;
 import dev.plant.backend.domain.user.dto.*;
 import dev.plant.backend.domain.user.service.UserService;
 import dev.plant.backend.global.response.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(summary="계좌 잔액 수정 및 입력", description = "사용자는 카카오 로그인 이후 계좌를 입력하거나 수정할 수 있음")
     @PatchMapping("/balance")
     public ResponseEntity<ApiResponse<UserBalanceResponse>> updateBalance(HttpSession session, @Valid @RequestBody UserBalanceRequest userBalanceRequest) {
         UserBalanceResponse userBalanceResponse = userService.changeAccountBalance(session, userBalanceRequest);
